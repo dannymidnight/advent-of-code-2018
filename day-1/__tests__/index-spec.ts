@@ -1,6 +1,6 @@
 import * as index from "../src/index";
 
-describe("Day 2", () => {
+describe("Day 1", () => {
   test("Examples", () => {
     const examples = [
       [[1, -1], 0],
