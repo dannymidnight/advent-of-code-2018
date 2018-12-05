@@ -1,4 +1,5 @@
-import * as index from "../src/index";
+import checksum from "../src/checksum";
+import findCommonLetters from "../src/findCommonLetters";
 
 describe("Day 2", () => {
   test("Checksum", () => {
@@ -12,6 +13,20 @@ describe("Day 2", () => {
       "ababab"
     ];
 
-    expect(index.checksum(input)).toEqual(12);
+    expect(checksum(input)).toEqual(12);
+  });
+
+  test("Find common letters", () => {
+    const input = [
+      "abcde",
+      "fghij",
+      "klmno",
+      "pqrst",
+      "fguij",
+      "axcye",
+      "wvxyz"
+    ];
+
+    expect(findCommonLetters(input)).toEqual("fgij");
   });
 });
