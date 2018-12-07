@@ -1,4 +1,4 @@
-import { createMap, findOverlaps } from "../src/index";
+import * as map from "../src/map";
 
 describe("Day 3", () => {
   test("Draw fabric map", () => {
@@ -14,9 +14,19 @@ describe("Day 3", () => {
       "........"
     ].join("\n");
 
-    const output = createMap(8, input);
+    const output = map.fill(map.create(8), input);
+    const str = map.toString(output);
 
-    expect(output).toEqual(expected);
-    expect(findOverlaps(output)).toEqual(4);
+    expect(str).toEqual(expected);
+    expect(map.findOverlaps(output)).toEqual(4);
+  });
+
+  test("find unique tile", () => {
+    const input = ["#1 @ 1,3: 4x4", "#2 @ 3,1: 4x4", "#3 @ 5,5: 2x2"];
+
+    const m = map.fill(map.create(8), input);
+    const id = map.findIntactClaim(input, m);
+
+    expect(id).toEqual(3);
   });
 });
