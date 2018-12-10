@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import reduce from "./reduce";
+import { reduce, findShortestLength } from "./polymer";
 
 function input() {
   return readFileSync("input", { encoding: "utf-8" }).trim();
@@ -7,3 +7,4 @@ function input() {
 
 const output = reduce(input());
 console.log("Day 5 – Part 1:", output.length);
+console.log("Day 5 – Part 2:", findShortestLength(output));

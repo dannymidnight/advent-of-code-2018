@@ -1,4 +1,4 @@
-export default function reduce(polymer: string) {
+export function reduce(polymer: string) {
   let result = polymer
     .split("")
     .reduce<string[]>((acc, next, idx) => {
@@ -26,4 +26,19 @@ export default function reduce(polymer: string) {
     result = reduce(result);
   }
   return result;
+}
+
+export function findShortestLength(polymer: string) {
+  const uniqueTypes = new Set(polymer.split("").map(a => a.toLowerCase()));
+
+  const lengths = Array.from(uniqueTypes)
+    .map(t => {
+      const reg = new RegExp(`[${t}${t.toUpperCase()}]`, "g");
+      const withTypeRemoved = polymer.replace(reg, "");
+
+      return reduce(withTypeRemoved).length;
+    })
+    .sort((a, b) => a - b);
+
+  return lengths[0];
 }
