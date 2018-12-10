@@ -1,5 +1,6 @@
 import {
   findMostCommonMinuteForId,
+  findMostFrequentAsleepOnMinute,
   findMostMinutesID,
   transform
 } from "../src/findMostMinutes";
@@ -29,8 +30,11 @@ describe("Day 4", () => {
 
     const output = transform(input);
     const id = findMostMinutesID(output);
+    const [minute] = findMostCommonMinuteForId(id, output);
 
     expect(id).toEqual(10);
-    expect(findMostCommonMinuteForId(id, output)).toEqual(24);
+    expect(minute).toEqual(24);
+
+    expect(findMostFrequentAsleepOnMinute(output)).toEqual([99, 45]);
   });
 });

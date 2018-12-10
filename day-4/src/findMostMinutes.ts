@@ -106,8 +106,17 @@ export function findMostMinutesID(records: Record[]): number {
   return s[0][0];
 }
 
-export function findMostCommonMinuteForId(id: number, records: Record[]) {
-  // Create map of minutes to occurance
+type MinuteOccurances = {
+  minute: number;
+  occurances: number;
+};
+
+// Returns [Minute, Frequency] tuple
+export function findMostCommonMinuteForId(
+  id: number,
+  records: Record[]
+): number[] {
+  // Create map of minutes to occurance for a given ID
   const counts = flatten(
     records.filter(r => r.id === id).map(r => r.mins)
   ).reduce<{ [key: number]: number }>((counts, minute) => {
@@ -120,5 +129,32 @@ export function findMostCommonMinuteForId(id: number, records: Record[]) {
     (a, b) => counts[parseInt(b, 0)] - counts[parseInt(a, 0)]
   );
 
-  return parseInt(mostCommonMinute, 0);
+  const minute = parseInt(mostCommonMinute, 0);
+  return [minute, counts[minute]];
+}
+
+// Returns [ID, Minute] tuple
+export function findMostFrequentAsleepOnMinute(records: Record[]): number[] {
+  const idsWithFrequency: {
+    [key: number]: MinuteOccurances;
+  } = {};
+
+  for (const record of records) {
+    if (idsWithFrequency[record.id]) {
+      continue;
+    }
+
+    const [minute, occurances] = findMostCommonMinuteForId(record.id, records);
+    idsWithFrequency[record.id] = {
+      minute,
+      occurances
+    };
+  }
+
+  // Order IDs by occurances
+  const [result] = Object.entries(idsWithFrequency).sort((a, b) => {
+    return b[1].occurances - a[1].occurances;
+  });
+
+  return [parseInt(result[0], 0), result[1].minute];
 }

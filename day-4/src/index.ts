@@ -2,7 +2,8 @@ import { readFileSync } from "fs";
 import {
   findMostCommonMinuteForId,
   findMostMinutesID,
-  transform
+  transform,
+  findMostFrequentAsleepOnMinute
 } from "./findMostMinutes";
 
 function input() {
@@ -13,9 +14,9 @@ function input() {
 
 const records = transform(input());
 const id = findMostMinutesID(records);
-const minute = findMostCommonMinuteForId(id, records);
-
-console.log("ID:", id);
-console.log("Minute:", minute);
-
+const [minute] = findMostCommonMinuteForId(id, records);
 console.log("Day 4 - Part 1:", id * minute);
+
+const partTwo = findMostFrequentAsleepOnMinute(records);
+console.log(partTwo[0]);
+console.log("Day 4 - Part 2:", partTwo[0] * partTwo[1]);
